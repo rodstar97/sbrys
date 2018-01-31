@@ -3,6 +3,48 @@ Widgets Layouts and so on , that dont come frome Designer
 """
 from PySide import QtGui, QtCore
 
+
+class StandartItem(QtGui.QPushButton):
+    def __init__(self, name):
+        super(StandartItem, self).__init__()
+
+        self.name = name
+        self.setFixedHeight(120)
+        self.setFixedWidth(120)
+        self.setText(self.name)
+
+
+    def mouseMoveEvent(self, e):
+        if e.buttons() != QtCore.Qt.LeftButton:
+            return
+        mimeData = QtCore.QMimeData()
+        #mimeData.setText('%d,%d' % (e.x(), e.y()))
+        mimeData.setText(self.text())
+
+        pixmap = QtGui.QPixmap.grabWidget(self)
+
+        drag = QtGui.QDrag(self)
+        drag.setMimeData(mimeData)
+        drag.setPixmap(pixmap)
+        drag.setHotSpot(e.pos())
+
+        if drag.exec_(QtCore.Qt.CopyAction | QtCore.Qt.MoveAction) == QtCore.Qt.MoveAction:
+            print 'moved'
+        else:
+            print 'copied'
+
+    def mousePressEvent(self, e):
+        QtGui.QPushButton.mousePressEvent(self, e)
+        if e.button() == QtCore.Qt.LeftButton:
+            print 'press'
+
+
+
+
+
+
+
+
 class FlowLayout(QtGui.QLayout):
     """
         flow layout set Widgets in Rows and Collumn per space the widget have.

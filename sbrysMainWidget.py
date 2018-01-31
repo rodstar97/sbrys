@@ -1,7 +1,7 @@
 from PySide import QtCore, QtGui
 from ui.qtd_main import Ui_sbrys_main_qw
-from extra_widgets import FlowLayout
-
+from extra_widgets import FlowLayout, StandartItem
+import db
 '''
 Keep this in a widget you can direct use it in Houdini
 
@@ -14,8 +14,8 @@ class MainItemLayoutWidget(QtGui.QWidget):
     def __init__(self):
         super(MainItemLayoutWidget, self).__init__()
         self.scrollLayout = FlowLayout()#QtGui.QFormLayout()
-        for i in xrange(20):
-            self.scrollLayout.addWidget(QtGui.QPushButton())
+        # for i in xrange(20):
+        #     self.scrollLayout.addWidget(QtGui.QPushButton())
         # scroll area widget contents
         self.scrollWidget = QtGui.QWidget()
         self.scrollWidget.setLayout(self.scrollLayout)
@@ -32,8 +32,8 @@ class MainItemLayoutWidget(QtGui.QWidget):
         self.centralWidget = QtGui.QWidget()
         self.setLayout(self.mainLayout)
 
-    def add_widget(self):
-        self.scrollLayout.addWidget(QtGui.QPushButton('test'))  # addRow(Test())
+    def add_widget(self, widget):
+        self.scrollLayout.addWidget(widget)  # addRow(Test())
 
         # set central widget
         #self.setCentralWidget(self.centralWidget)
@@ -53,15 +53,11 @@ class MainWidget(Ui_sbrys_main_qw, QtGui.QWidget):
 
 
     def create_flowLayout(self):
-        '''
-        self.layout = QtGui.QVBoxLayout()
-        for i in xrange(20):
-            self.layout.addWidget(QtGui.QPushButton('test_{0}'.format(i)))
-        self.flowlayout_null.setLayout(self.layout)
-        '''
+        data = db.read_from_db()
+        for i in data:
+            item = StandartItem(name ='item_{0}'.format(i[3]))
 
-        for i in xrange(20):
-            self.itemLayout.add_widget()
+            self.itemLayout.add_widget(item)
         self.verticalLayout.addWidget(self.itemLayout)#self.itemLayout
 
 
