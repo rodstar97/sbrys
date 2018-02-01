@@ -29,6 +29,48 @@ except ImportError:
     from PyQt4 import QtCore
     from PyQt4 import QtGui
 
+from component_widget import ComponentWidget
+
+
+class ComponentDelegate(QtGui.QStyledItemDelegate):
+    """
+        Change Look from normal QListview item to custom Qwidget
+
+    """
+    def __init__(self, parent):
+       QtGui.QStyledItemDelegate.__init__(self, parent)
+
+    def getData(self, index):
+        row = index.row()
+        return self.components[row]
+
+    def createEditor(self, parent, option, index):
+        # Doubleclick Event
+        editor = ComponentWidget(path=str(index.data()),parent = parent, selected=True)
+        editor.setAutoFillBackground(True)
+        return editor
+
+    def flags(self, index):
+        return QtGui.Qt.ItemIsEnabled | QtGui.Qt.ItemIsSelectable
+
+    def paint(self, painter, option, index):
+        componentWidget = ComponentWidget()#path=str(index.data())
+        selectedComponetWidget = ComponentWidget( selected=True)#path=str(index.data()),
+        painter.save()
+        painter.translate(option.rect.topLeft())
+        if option.state & QtGui.QStyle.State_Selected:
+            selectedComponetWidget.resize(option.rect.size())
+            selectedComponetWidget.render(painter, QtCore.QPoint())
+            painter.setPen(QtGui.QPen(QtCore.Qt.NoPen))
+        else:
+            componentWidget.resize(option.rect.size())
+            componentWidget.render(painter, QtCore.QPoint())
+            painter.setPen(QtGui.QPen(QtCore.Qt.NoPen))
+        painter.drawRect(option.rect)
+        painter.restore()
+
+    def sizeHint(self, options, index):
+        return QtCore.QSize(100, 100)
 
 class ListModel(QtCore.QAbstractListModel):
     def __init__(self, os_list):
@@ -85,6 +127,9 @@ class ListView(QtGui.QListView):
         list_model = ListModel(self.data_sources)
         self.setModel(list_model)
 
+        delegate = ComponentDelegate(self)
+        self.setItemDelegate(delegate)
+
         # size
         self.setIconSize(QtCore.QSize(50, 50))
         self.setSpacing(5)
@@ -115,10 +160,22 @@ class ListView(QtGui.QListView):
         return super(ListView, self).dropEvent(evt)
 
 
-def create_data_source():
-    logos = glob.glob('/usr/share/app-install/icons/*.png')
+def create_data_source1():
+    logos = glob.glob('C:\Users\RF\Desktop\icons\*.png')
     return [(os.path.splitext(i)[0], i) for i in logos]
 
+def create_data_source(filtername = ''):
+    import sqlite3
+    conn = sqlite3.connect('../tutorial.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM stuffToPlot WHERE keyword LIKE 'name%'")#'SELECT * FROM stuffToPlot WHERE value > 2'
+    data = c.fetchall()
+    #print(data)
+    #for row in data:
+        #print row[2]
+    c.close
+    conn.close()
+    return data
 
 class Demo(QtGui.QWidget):
     def __init__(self):
