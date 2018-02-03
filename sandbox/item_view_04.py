@@ -1,5 +1,5 @@
 import sys
-from PyQt4 import QtGui, QtCore
+from PySide import QtGui, QtCore
 
 class MyDelegate(QtGui.QStyledItemDelegate):
     def createEditor(self, parent, option, index):

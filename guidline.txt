@@ -1,0 +1,20 @@
+real file -- >	moss_shader_noise_001_5879904456.ma
+	mel data
+
+real file -- >	moss_shader_noise_002_5879904456.ma
+	mel data
+
+
+sidecar file -->	.moss_shader_noise_5879904456.json
+	hash: hash(unixtime)
+	tags : ['hypershade', 'lookdev', 'moss']
+	software: [maya]
+	versions: 2
+	latest_file 'moss_shader_noise_v002_5879904456.ma':
+	files : [moss_shader_noise_v001_5879904456.ma, moss_shader_noise_v002_5879904456.ma]
+
+
+db entry -->
+	CREATE ENTRY 	all  sidecar file attributes
+
+	UPDATE ENTRY  get by hash  add Version
