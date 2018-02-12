@@ -15,6 +15,7 @@ class TagButton(QtGui.QPushButton):
 
         self.name = name
         self.setFixedHeight(20)
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
         self.setText(self.name)
         self.newfont = QtGui.QFont("Ubuntu", 7, QtGui.QFont.Normal)
         self.setFont(self.newfont)
@@ -60,7 +61,8 @@ class CreateSbrysFile(QtGui.QDialog):
 
         self.add_predifined_tags()
         self.ui.add_tag_pb.clicked.connect(self.add_tag_to_taglist)
-        self.ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setAutoDefault(False)
+        self.ui.toHide.hide()
+        #self.ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setAutoDefault(False)
         self.ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setDefault(False)#setToolTip('Apply Tooltip')#button(QtGui.QDialogButtonBox.OK).setAutoFocus(False)
 
 
@@ -74,8 +76,9 @@ class CreateSbrysFile(QtGui.QDialog):
 
     def add_tag_to_taglist(self):
         print 'ahha'
-
-
+        self.ui.tags_le.text()
+        self.ui.tag_hl.addWidget(TagButton(name=self.ui.tags_le.text()))
+        self.ui.tags_le.setText('')
 
 
 
