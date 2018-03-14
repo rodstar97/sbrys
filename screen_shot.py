@@ -34,17 +34,15 @@ class GetSelection(QtGui.QLabel):
             self.rubberBand.setGeometry(QtCore.QRect(self.origin, QtCore.QSize()))
             self.rubberBand.show()
 
+
     def mouseReleaseEvent(self, eventQMouseEvent):
         if eventQMouseEvent.button() == QtCore.Qt.LeftButton:
+            #self.parent().setWindowOpacity(0.0)
             self.rubberBand.hide()
             self.parent().selection = self.rubberBand.geometry()
-            print self.parent().selection
             self.parent().close()
 
 
-    def setTextLabelPosition (self, x, y):
-        self.x, self.y = x, y
-        self.setText('Please click on screen ( %d : %d )' % (self.x, self.y))
 
 
 
@@ -55,11 +53,13 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
         super(SnapshotWidget, self).__init__(parent)
 
         self.selection = []
-        self.setWindowOpacity(0.4)
+        self.setWindowOpacity(0.9)
         # Init QLabel
         self.positionQLabel = GetSelection(self)
-        #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+
         self.setWindowState(QtCore.Qt.WindowFullScreen)
+
+        #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         #self.setWindowModality(QtCore.Qt.ApplicationModal)
 
         # Init QLayout
@@ -70,23 +70,10 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
 
     def keyPressEvent(self, event):
         # Re-direct ESC key to closeEvent
-        print(event)
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
 
-    def show(self):
-        print 'show me what you '
 
-    def closeEvent(self, event):
-        print "Closing main window"
-
-        print 'by by tou beautifull World'
-        print self.selection
-
-    def __del__(self):
-        pass
-        #widgets = QtGui.QApplication.instance()
-        #print widgets
 
     @staticmethod
     def get_data(parent=None):
@@ -94,7 +81,10 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
         dialog.exec_()
         appInstance = QtCore.QCoreApplication.instance()
         screen = appInstance.desktop().winId()
-        screenshot = QtGui.QPixmap.grabWindow(screen, dialog.selection.getRect())
+        print  dialog.selection.getRect()
+        set_selection = ((dialog.selection.getRect()[0]+11), (dialog.selection.getRect()[1]+11),(dialog.selection.getRect()[2]),(dialog.selection.getRect()[3]))
+
+        screenshot = QtGui.QPixmap.grabWindow(screen, *set_selection)#*(dialog.selection.getRect()
         return screenshot
 
 
@@ -102,6 +92,7 @@ class TestSS(QtGui.QMainWindow):
     def __init__(self):
         super(TestSS,self).__init__()
         self.qlayout = QtGui.QHBoxLayout()
+        #self.menuBar.hide()
         self.button = QtGui.QPushButton('create SnapShot')
 
         self.button.clicked.connect(self.createSnapShot)
@@ -116,9 +107,9 @@ class TestSS(QtGui.QMainWindow):
         #self.snapshot_widget.exec_()
         self.button.setIcon(self.snapshot_widget)
         #self.setIconSize(self.button.size())
-        self.button.setIconSize(QtCore.QSize(130, 130))
-        self.button.setGeometry(QtCore.QRect(1030, 500, 161, 61))
-        print  self.snapshot_widget,'ahha'
+        self.button.setIconSize(QtCore.QSize(230, 230))
+        #self.button.setGeometry(QtCore.QRect(1030, 500, 161, 61))
+
 
 
 
