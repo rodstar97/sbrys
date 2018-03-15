@@ -5,8 +5,9 @@ from PySide import QtGui, QtCore
 class Selector(QtGui.QRubberBand):
     def __init__(self,*arg,**kwargs):
         super(Selector, self).__init__(*arg, **kwargs)
+        #self.setStyleSheet("background-color: rgba(255, 255, 0, 80);");
+        #self.setStyle(QtGui.QStyleFactory.create('windowsvista'))
 
-        self.setStyle(QtGui.QStyleFactory.create('windowsvista'))
 
     #toDo
     #def paintEvent(self, QPaintEvent):
@@ -14,14 +15,17 @@ class Selector(QtGui.QRubberBand):
         #find some way to Keep Rubberband Selection in All Os and styles the Same "perhaps Style Sheets "
 
 
-
 class GetSelection(QtGui.QLabel):
     def __init__ (self, parent = None):
         super(GetSelection, self).__init__(parent)
         self.setMouseTracking(True)
-        self.coloring = QtGui.QGraphicsColorizeEffect()
+        #self.coloring = QtGui.QGraphicsColorizeEffect()
         self.rubberBand = Selector(QtGui.QRubberBand.Rectangle,self)
         self.origin = QtCore.QPoint()
+        #self.setAutoFillBackground(False)
+        self.setStyleSheet("background-color: rgba(255, 0, 0, 0);");
+
+
 
 
     def mouseMoveEvent (self, eventQMouseEvent):
@@ -37,14 +41,9 @@ class GetSelection(QtGui.QLabel):
 
     def mouseReleaseEvent(self, eventQMouseEvent):
         if eventQMouseEvent.button() == QtCore.Qt.LeftButton:
-            #self.parent().setWindowOpacity(0.0)
             self.rubberBand.hide()
             self.parent().selection = self.rubberBand.geometry()
             self.parent().close()
-
-
-
-
 
 
 
@@ -53,7 +52,7 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
         super(SnapshotWidget, self).__init__(parent)
 
         self.selection = []
-        self.setWindowOpacity(0.9)
+        self.setWindowOpacity(0.6)
         # Init QLabel
         self.positionQLabel = GetSelection(self)
 
@@ -61,6 +60,10 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
 
         #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         #self.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.setStyleSheet("background-color:transparent;")
+        #self.setGeometry(100, 100, 100, 100)
 
         # Init QLayout
         layoutQHBoxLayout = QtGui.QHBoxLayout()
@@ -72,8 +75,6 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
         # Re-direct ESC key to closeEvent
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
-
-
 
     @staticmethod
     def get_data(parent=None):
@@ -92,43 +93,19 @@ class TestSS(QtGui.QMainWindow):
     def __init__(self):
         super(TestSS,self).__init__()
         self.qlayout = QtGui.QHBoxLayout()
-        #self.menuBar.hide()
         self.button = QtGui.QPushButton('create SnapShot')
-
         self.button.clicked.connect(self.createSnapShot)
         self.qlayout.addWidget(self.button)
         self.setCentralWidget(self.button)
-        #self.setWindowModality(QtCore.Qt.WindowModal)
 
     def createSnapShot(self):
         self.snapshot_widget = SnapshotWidget().get_data()
-        #self.snapshot_widget.setWindowModality(QtCore.Qt.WindowModal)
-        #self.snapshot_widget.setWindowModality(QtCore.Qt.ApplicationModal)
-        #self.snapshot_widget.exec_()
         self.button.setIcon(self.snapshot_widget)
-        #self.setIconSize(self.button.size())
         self.button.setIconSize(QtCore.QSize(230, 230))
-        #self.button.setGeometry(QtCore.QRect(1030, 500, 161, 61))
-
-
-
 
 
 if __name__ == '__main__':
-
-
-
-
     app = QtGui.QApplication(sys.argv)
     myQTestWidget = TestSS()
-
-
-    #myQTestWidget.setWindowModality(QtCore.Qt.ApplicationModal)
     myQTestWidget.show()
-
-    #screen = app.desktop().winId()
-    ##screenshot.save(os.path.expanduser("~/screenshot.jpg"), "jpg")
-    #print 'afer Selction'
-    #myQTestWidget.show()
-    #myQTestWidget.exec_()
     app.exec_()

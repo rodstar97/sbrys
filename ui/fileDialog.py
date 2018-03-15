@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/rf/PycharmProjects/sbrys/ui/fileDialog.ui'
 #
-# Created: Sun Feb 11 20:43:18 2018
+# Created: Thu Mar 15 18:04:42 2018
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -55,28 +55,19 @@ class Ui_create_sbrys_file(object):
         self.label_2.setMaximumSize(QtCore.QSize(30, 16777215))
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
-        self.tag_hl = QtGui.QHBoxLayout()
-        self.tag_hl.setSpacing(6)
-        self.tag_hl.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
-        self.tag_hl.setObjectName("tag_hl")
-        self.verticalLayout.addLayout(self.tag_hl)
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.tags_le = QtGui.QLineEdit(create_sbrys_file)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tags_le.sizePolicy().hasHeightForWidth())
-        self.tags_le.setSizePolicy(sizePolicy)
-        self.tags_le.setMinimumSize(QtCore.QSize(0, 0))
-        self.tags_le.setObjectName("tags_le")
-        self.horizontalLayout.addWidget(self.tags_le)
+        self.tag_buttons_hl = QtGui.QHBoxLayout()
+        self.tag_buttons_hl.setSpacing(6)
+        self.tag_buttons_hl.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
+        self.tag_buttons_hl.setObjectName("tag_buttons_hl")
+        self.verticalLayout.addLayout(self.tag_buttons_hl)
+        self.tags_hl = QtGui.QHBoxLayout()
+        self.tags_hl.setObjectName("tags_hl")
         self.add_tag_pb = QtGui.QPushButton(create_sbrys_file)
         self.add_tag_pb.setAutoDefault(True)
         self.add_tag_pb.setDefault(False)
         self.add_tag_pb.setObjectName("add_tag_pb")
-        self.horizontalLayout.addWidget(self.add_tag_pb)
-        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.tags_hl.addWidget(self.add_tag_pb)
+        self.verticalLayout.addLayout(self.tags_hl)
         self.label_6 = QtGui.QLabel(create_sbrys_file)
         font = QtGui.QFont()
         font.setPointSize(8)
@@ -110,10 +101,10 @@ class Ui_create_sbrys_file(object):
         self.label_5.setSizePolicy(sizePolicy)
         self.label_5.setObjectName("label_5")
         self.verticalLayout.addWidget(self.label_5)
-        self.textEdit = QtGui.QTextEdit(create_sbrys_file)
-        self.textEdit.setTabChangesFocus(True)
-        self.textEdit.setObjectName("textEdit")
-        self.verticalLayout.addWidget(self.textEdit)
+        self.desc_long_te = QtGui.QTextEdit(create_sbrys_file)
+        self.desc_long_te.setTabChangesFocus(True)
+        self.desc_long_te.setObjectName("desc_long_te")
+        self.verticalLayout.addWidget(self.desc_long_te)
         self.label_8 = QtGui.QLabel(create_sbrys_file)
         font = QtGui.QFont()
         font.setPointSize(8)
@@ -135,11 +126,10 @@ class Ui_create_sbrys_file(object):
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), create_sbrys_file.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), create_sbrys_file.reject)
         QtCore.QMetaObject.connectSlotsByName(create_sbrys_file)
-        create_sbrys_file.setTabOrder(self.name_le, self.tags_le)
-        create_sbrys_file.setTabOrder(self.tags_le, self.add_tag_pb)
+        create_sbrys_file.setTabOrder(self.name_le, self.add_tag_pb)
         create_sbrys_file.setTabOrder(self.add_tag_pb, self.desr_le)
-        create_sbrys_file.setTabOrder(self.desr_le, self.textEdit)
-        create_sbrys_file.setTabOrder(self.textEdit, self.image_pb)
+        create_sbrys_file.setTabOrder(self.desr_le, self.desc_long_te)
+        create_sbrys_file.setTabOrder(self.desc_long_te, self.image_pb)
         create_sbrys_file.setTabOrder(self.image_pb, self.buttonBox)
         create_sbrys_file.setTabOrder(self.buttonBox, self.toHide)
 
@@ -149,16 +139,16 @@ class Ui_create_sbrys_file(object):
         self.label.setText(QtGui.QApplication.translate("create_sbrys_file", "name:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("create_sbrys_file", "name should make sense , please no spaces", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("create_sbrys_file", "tags:", None, QtGui.QApplication.UnicodeUTF8))
-        self.add_tag_pb.setText(QtGui.QApplication.translate("create_sbrys_file", "add Tag", None, QtGui.QApplication.UnicodeUTF8))
+        self.add_tag_pb.setText(QtGui.QApplication.translate("create_sbrys_file", "add Tags", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("create_sbrys_file", "space seperated ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("create_sbrys_file", "description short:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("create_sbrys_file", "short description what your  stuff is doing", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("create_sbrys_file", "discription long:", None, QtGui.QApplication.UnicodeUTF8))
-        self.textEdit.setHtml(QtGui.QApplication.translate("create_sbrys_file", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.desc_long_te.setHtml(QtGui.QApplication.translate("create_sbrys_file", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Yeah  its anoying , but your future self will love you</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Yeah  its anoying , but your future self will love you v001</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("create_sbrys_file", "if you share sbrys files, this should make sense how to use your nodes", None, QtGui.QApplication.UnicodeUTF8))
         self.image_pb.setText(QtGui.QApplication.translate("create_sbrys_file", "create Snapshot", None, QtGui.QApplication.UnicodeUTF8))
 

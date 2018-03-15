@@ -100,7 +100,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="tag_hl">
+    <layout class="QHBoxLayout" name="tag_buttons_hl">
      <property name="spacing">
       <number>6</number>
      </property>
@@ -110,27 +110,11 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLineEdit" name="tags_le">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-      </widget>
-     </item>
+    <layout class="QHBoxLayout" name="tags_hl">
      <item>
       <widget class="QPushButton" name="add_tag_pb">
        <property name="text">
-        <string>add Tag</string>
+        <string>add Tags</string>
        </property>
        <property name="autoDefault">
         <bool>true</bool>
@@ -202,7 +186,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="desc_long_te">
      <property name="tabChangesFocus">
       <bool>true</bool>
      </property>
@@ -211,7 +195,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Yeah  its anoying , but your future self will love you&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Yeah  its anoying , but your future self will love you v001&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -254,10 +238,9 @@ p, li { white-space: pre-wrap; }
  </widget>
  <tabstops>
   <tabstop>name_le</tabstop>
-  <tabstop>tags_le</tabstop>
   <tabstop>add_tag_pb</tabstop>
   <tabstop>desr_le</tabstop>
-  <tabstop>textEdit</tabstop>
+  <tabstop>desc_long_te</tabstop>
   <tabstop>image_pb</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>toHide</tabstop>

@@ -1,10 +1,19 @@
 from ui.fileDialog import Ui_create_sbrys_file
 from PySide import QtCore, QtGui
 from extra_widgets import FlowLayout
+from screen_shot import SnapshotWidget
 tag_list = ['test','maya','houdini','mari','nuke']
 predefined_tag_list = ['maya', 'hypershade', 'shader']
 
+
+
+
 class TagButton(QtGui.QPushButton):
+    """"
+    Button based on QPushButton
+    Fixed size detroys self by double Click
+
+    """
 
     # create Signals for DoubleClick remove
     doubleClicked = QtCore.Signal()
@@ -38,12 +47,16 @@ class TagButton(QtGui.QPushButton):
         else:
             self.timer.start(250)
 
-
     def remove_button(self):
         self.deleteLater()
 
 
 class SbrysLineEdit(QtGui.QLineEdit):
+    """
+        Adabtation from QLineEdit
+        add Multi Tag autoComplition
+
+    """
     def __init__(self, *args, **kwargs):
         QtGui.QLineEdit.__init__(self, *args, **kwargs)
         self.multipleCompleter = None
@@ -84,33 +97,40 @@ class SbrysLineEdit(QtGui.QLineEdit):
 
 
 class CreateSbrysFile(QtGui.QDialog):
+    """
+        QFileDialog Collect Infos for File saving
+
+    """
+
     def __init__(self):
         super(CreateSbrysFile, self).__init__()
         self.ui = Ui_create_sbrys_file()
         self.ui.setupUi(self)
+        self.ui.image_pb.clicked.connect(self.create_snapShot)
+
+        # setup for Tags in flowLayout
         self.tags_le = SbrysLineEdit()
         self.tags_le.setObjectName('tags_le')
-
         self.tags_flw = QtGui.QWidget()
         self.tags_fl = FlowLayout()
         self.tags_flw.setLayout(self.tags_fl)
         self.ui.tag_buttons_hl.addWidget(self.tags_flw)
+
         #set auto completion in tags
         self.completer = QtGui.QCompleter()
         self.tags_le.setMultipleCompleter(self.completer)
-
-
         self.model = QtGui.QStringListModel()
         self.completer.setModel(self.model)
         self.get_data(self.model)
 
+        #fill tag list
         self.add_predifined_tags()
         self.ui.add_tag_pb.clicked.connect(self.add_tag_to_taglist)
         self.ui.toHide.hide()
         self.ui.tags_hl.insertWidget(0, self.tags_le, 0)
-        #self.ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setAutoDefault(False)
-        self.ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setDefault(False)#setToolTip('Apply Tooltip')#button(QtGui.QDialogButtonBox.OK).setAutoFocus(False)
+        self.ui.buttonBox.button(QtGui.QDialogButtonBox.Ok).setDefault(False)
 
+        #set Tab Order
         self.set_tab_order()
 
     def get_data(self, model, list=[]):
@@ -133,14 +153,7 @@ class CreateSbrysFile(QtGui.QDialog):
 
     def set_tab_order(self):
         """
-        name_le
-        tags_le
-        add_tag_pb
-        desr_le
-        desc_long_te
-        image_pb
-
-        :return:
+        Set tab Order by tab orderlist
         """
         self.tab_order_list = ['name_le','tags_le','add_tag_pb','desr_le','desc_long_te','image_pb']
         self.short_name_obj_matrix={
@@ -153,10 +166,14 @@ class CreateSbrysFile(QtGui.QDialog):
             next_name =  self.tab_order_list[index+1]
             index_widget = self.findChild(self.short_name_obj_matrix[index_name.split('_')[-1]], index_name)
             next_widget  = self.findChild(self.short_name_obj_matrix[next_name.split('_')[-1]], next_name)
-            print index_widget, next_widget #widget =  eval(search_obj)
-            #print index , index +1
+
             self.setTabOrder(index_widget, next_widget)
 
+
+    def create_snapShot(self):
+        self.snapshot_widget = SnapshotWidget().get_data()
+        self.ui.image_pb.setIcon(self.snapshot_widget)
+        self.ui.image_pb.setIconSize(QtCore.QSize(230, 230))
 
 if __name__ == '__main__':
     import sys, os

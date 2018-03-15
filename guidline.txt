@@ -7,10 +7,16 @@ real file -- >	moss_shader_noise_002_5879904456.ma
 
 sidecar file -->	.moss_shader_noise_5879904456.json
 	hash: hash(unixtime)
+	name: moos_shader_noise
+	desription_short:'Noise Pattern for Moos'
+	description_long:'4 fractalNoises with rest Position blended to moos paatern'
+	img = ''
 	tags : ['hypershade', 'lookdev', 'moss']
+	context : 'hypershade'
 	software: [maya]
 	versions: 2
-	latest_file 'moss_shader_noise_v002_5879904456.ma':
+	sotware_v: 2016
+
 	files : [moss_shader_noise_v001_5879904456.ma, moss_shader_noise_v002_5879904456.ma]
 
 

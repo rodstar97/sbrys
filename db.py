@@ -1,7 +1,7 @@
 import time
 import datetime
 import random
-
+import sqlite3
 
 conn = sqlite3.connect('tutorial.db')
 c = conn.cursor()
@@ -47,15 +47,16 @@ def read_from_db(filtername = ''):
 #create_table()
 #data_entry()
 def create_database():
+    import sqlite3
     conn = sqlite3.connect('tutorial.db')
     c = conn.cursor()
     create_table()
-    for i in range(1000):
+    for i in range(100):
         dynamic_data_entry(name = 'name_{0}'.format(i))
         #time.sleep(1)
     c.close
     conn.close()
-#create_database()
+create_database()
 #read_from_db()
 c.close
 conn.close()
