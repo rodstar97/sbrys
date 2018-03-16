@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, platform
 from PySide import QtGui, QtCore
 
 
@@ -6,7 +6,7 @@ class Selector(QtGui.QRubberBand):
     def __init__(self,*arg,**kwargs):
         super(Selector, self).__init__(*arg, **kwargs)
         #self.setStyleSheet("background-color: rgba(255, 255, 0, 80);");
-        #self.setStyle(QtGui.QStyleFactory.create('windowsvista'))
+        self.setStyle(QtGui.QStyleFactory.create('windowsvista'))
 
 
     #toDo
@@ -60,8 +60,10 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
 
         #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         #self.setWindowModality(QtCore.Qt.ApplicationModal)
+
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        if platform.system() == 'Linux':
+            self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setStyleSheet("background-color:transparent;")
         #self.setGeometry(100, 100, 100, 100)
 
@@ -82,11 +84,12 @@ class SnapshotWidget (QtGui.QDialog):#QtGui.QDialog
         dialog.exec_()
         appInstance = QtCore.QCoreApplication.instance()
         screen = appInstance.desktop().winId()
-        print  dialog.selection.getRect()
+        #print  dialog.selection.getRect()
         set_selection = ((dialog.selection.getRect()[0]+11), (dialog.selection.getRect()[1]+11),(dialog.selection.getRect()[2]),(dialog.selection.getRect()[3]))
 
         screenshot = QtGui.QPixmap.grabWindow(screen, *set_selection)#*(dialog.selection.getRect()
         return screenshot
+        #toDo check for dual Monitor setup
 
 
 class TestSS(QtGui.QMainWindow):
